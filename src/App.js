@@ -173,6 +173,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Emoji Classifier</h1>
+        <p>To draw, press the shift key and move your mouse over the canvas.</p>
+        <br></br>
         { renderBody }
         <div>
           <p>The emojis we've trained so far:</p>
