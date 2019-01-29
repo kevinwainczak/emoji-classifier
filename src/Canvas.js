@@ -51,12 +51,20 @@ export default class Canvas extends Component {
         })
     }
 
+    clearCanvas = () => {
+        this.setState({
+            pixels: new Array(this.canvasSize * this.canvasSize).fill(0),
+            canComplete: false
+        });
+    }
+
     render () {
         return (
             <div>
                 <div style={{ border: '1px solid black', width: 'fit-content', margin: 'auto'}}>
                     {this.createCanvas()}
                 </div>
+                <button onClick={this.clearCanvas}>Clear</button>
                 { this.state.canComplete && <button onClick={this.finishDrawing}>Done!</button>}
             </div>
         );
