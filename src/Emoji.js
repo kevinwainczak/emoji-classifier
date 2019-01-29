@@ -1,6 +1,6 @@
 export default class Emoji {
     constructor() {
-        this.allEmojis = ['😍','💩','👻','🧠','💁‍','🌙','☀️','🍆','💰','💯'];
+        this.allEmojis = ['❤️','💩','👻','❌','🙃','🌙','🙂','⚾️','💰','💯'];
         this.unseenEmojis = this.allEmojis.slice();
         this.seenEmojis = [];
     }
