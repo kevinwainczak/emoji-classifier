@@ -26,12 +26,14 @@ class App extends Component {
 
     this.net = new brain.NeuralNetwork();
     this.emoji = new Emoji();
+    this.drawTotal = 3;
 
     this.state = {
       currentEmoji: this.emoji.getRandomEmoji(), // init with a randomly retrieved emoji
       trainingData: [], // the training data that we will build
       train: true, // we start in training mode
-      modelGuessedEmoji: null // the emoji that the model guesses
+      modelGuessedEmoji: null, // the emoji that the model guesses
+      drawNum: 0
     }
   }
 
@@ -43,7 +45,6 @@ class App extends Component {
    * @param {Array} pixels An array of 1's and 0's representing filled pixels.
    */
   trainData = (pixels) => {
-      this.emoji.addSeenEmoji(this.state.currentEmoji);
 
       // Build the output.
       const output = {};
@@ -61,10 +62,21 @@ class App extends Component {
         input: pixels,
         output: { [this.state.currentEmoji]: 1}
       });
-      this.setState({
-        trainingData: trainingData,
-        currentEmoji: this.emoji.getRandomEmoji()
-      });
+      if (this.state.drawNum === 2) {
+        this.emoji.addSeenEmoji(this.state.currentEmoji);
+        this.setState({
+          trainingData: trainingData,
+          currentEmoji: this.emoji.getRandomEmoji(),
+          drawNum: 0
+        });
+      } else {
+        this.setState((prevState) => {
+          return {
+            trainingData: trainingData,
+            drawNum: prevState.drawNum + 1
+          }
+        });
+      }
   }
 
   /**
@@ -137,6 +149,7 @@ class App extends Component {
                     pixelSize={this.pixelSize}/>
             <EmojiDisplay emoji={this.state.currentEmoji}/>
           </div>
+          <p>Draw this {this.drawTotal - this.state.drawNum} times!</p>
           <button onClick={this.toggleRunTrain}>Run your model</button>
       </div>);
 
