@@ -1,9 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+import { mount, shallow } from 'enzyme';
+
+
+describe('App Tests', () => {
+
+  const component = <App />;
+  const wrapper = mount(component);
+
+  const shallowWrapper = shallow(component);
+
+  it('should render without crashing', () => {
+    expect(wrapper.exists()).toBeTruthy();
+  });
+
+  it('should increment drawNum and trainingData length', () => {
+    const pixels = [0,0,0,0,1,1,1,1,0,0,0,0];
+    shallowWrapper.setState({ drawNum: 0, trainData: [] });
+    shallowWrapper.instance().trainData(pixels);
+    expect(wrapper.instance().state('drawNum')).toEqual(1);
+    expect(wrapper.instance().state('trainingData').length).toEqual(1);
+  });
+
 });
