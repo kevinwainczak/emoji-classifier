@@ -12,6 +12,7 @@ export default class Pixel extends Component {
             this.props.fillPixel(this.props.col, this.props.row);
         }
     }
+    
     componentDidMount = () => {
         this.elemRef.current.addEventListener('mousemove', this.handleMouseEvent);
     }
